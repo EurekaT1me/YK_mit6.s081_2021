@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="077e2047-b7f9-449e-9801-0d31b9311d68" name="conn-docker">
+        <fileTransfer rootFolder="/root" accessType="SFTP" host="127.0.0.1" port="20000" sshConfigId="d469ac4e-6b0e-4561-8d34-3e2e8d53f482" sshConfig="root@127.0.0.1:20000 key" keyPair="true">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" keepAliveTimeout="0" passiveMode="true" shareSSLContext="true" isUseSudo="true" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>
