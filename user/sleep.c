@@ -8,11 +8,11 @@
 
 int main(int argc,char *argv[]){
     if(argc<2||argc>2){
-        printf("Usage: sleep seconds...\n");
+        printf("Usage: sleep [the number of clock ticks]...\n");
         exit(1);
     }
 
-
+    // 调用sys_sleep,单位clock ticks
     sleep(atoi(argv[1]));
     exit(0);
 }
