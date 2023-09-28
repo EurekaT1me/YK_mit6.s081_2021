@@ -58,7 +58,8 @@ void find(char* path,char *need){
     switch (st.type) {
         case T_FILE:
             if(strcmp(basename(path), basename(need))==0){
-                fprintf(1,"%s\n",path);
+                write(1,path,sizeof path); // fix: 使用write保证可以实现输出重定向
+                write(1,"\n",1);
             }
             break;
         case T_DIR:
