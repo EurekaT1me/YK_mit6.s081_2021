@@ -105,4 +105,9 @@ struct proc {
   struct file *ofile[NOFILE];  // Open files
   struct inode *cwd;           // Current directory
   char name[16];               // Process name (debugging)
+
+  // thr syscall number need to trace.
+  // 如果traceMask为0，表示不需要trace
+  // traceMask使用位表示某个系统调用
+  int traceMask;
 };
