@@ -146,7 +146,7 @@ static uint64 (*syscalls[])(void) = {
         [SYS_trace]   sys_trace,
 };
 
-char* syscallMap[] = {
+static char* syscallMap[] = {
         "fork",
         "exit",
         "wait",
