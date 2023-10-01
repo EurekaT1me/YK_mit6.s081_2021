@@ -27,7 +27,7 @@ struct cpu {
 };
 
 extern struct cpu cpus[NCPU];
-extern struct usyscall usyscall;
+
 // per-process data for the trap handling code in trampoline.S.
 // sits in a page by itself just under the trampoline page in the
 // user page table. not specially mapped in the kernel page table.
@@ -80,7 +80,6 @@ struct trapframe {
   /* 280 */ uint64 t6;
 };
 
-
 enum procstate { UNUSED, USED, SLEEPING, RUNNABLE, RUNNING, ZOMBIE };
 
 // Per-process state
@@ -106,5 +105,4 @@ struct proc {
   struct file *ofile[NOFILE];  // Open files
   struct inode *cwd;           // Current directory
   char name[16];               // Process name (debugging)
-  struct usyscall* usyscall;  // usyscall page for USYSCALL
 };

@@ -1,8 +1,8 @@
 #include "types.h"
 #include "riscv.h"
-#include "param.h"
 #include "defs.h"
 #include "date.h"
+#include "param.h"
 #include "memlayout.h"
 #include "spinlock.h"
 #include "proc.h"
@@ -46,7 +46,6 @@ sys_sbrk(void)
 
   if(argint(0, &n) < 0)
     return -1;
-  
   addr = myproc()->sz;
   if(growproc(n) < 0)
     return -1;
@@ -58,7 +57,6 @@ sys_sleep(void)
 {
   int n;
   uint ticks0;
-
 
   if(argint(0, &n) < 0)
     return -1;
@@ -74,51 +72,6 @@ sys_sleep(void)
   release(&tickslock);
   return 0;
 }
-
-
-#ifdef LAB_PGTBL
-int
-sys_pgaccess(void)
-{
-  // lab pgtbl: your code here.
-  // parse argments
-  uint64 va,addr;
-  int len;
-  if(argaddr(0,&va)<0){
-      return -1;
-  }
-  if(argint(1,&len)<0){
-      return -1;
-  }
-  if(argaddr(2,&addr)<0){
-      return -1;
-  }
-  if(len<0||len>64) return -1;
-  // get proc block
-  struct proc *p=myproc();
-  pagetable_t pagetable = p->pagetable;
-  pte_t* pte;
-  // init abits
-  uint64 abits=0;
-  // check from va
-  for(int i=0;i<len;i++){
-      uint64 offset=i*PGSIZE;
-      uint64 va_tmp=va+offset;
-      pte=walk(pagetable,va_tmp,0);
-      if(pte==0) continue;
-      else{
-          if(*pte&PTE_A){
-              abits|=(1<<i);
-              *pte&=(~PTE_A);
-          }
-      }
-  }
-  if(copyout(pagetable,addr,(char*)&abits,sizeof abits)<0){
-      return -1;
-  }
-  return 0;
-}
-#endif
 
 uint64
 sys_kill(void)

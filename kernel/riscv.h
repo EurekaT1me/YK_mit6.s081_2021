@@ -343,11 +343,8 @@ sfence_vma()
 #define PTE_W (1L << 2)
 #define PTE_X (1L << 3)
 #define PTE_U (1L << 4) // 1 -> user can access
-#define PTE_A (1L << 6) // 1 -> user can access
 
 // shift a physical address to the right place for a PTE.
-// pa>>12 位是为了拼接offset（12位）
-// <<10位是为了给标识位（PTE中flags为10位），和offset拼接时需要右移10位
 #define PA2PTE(pa) ((((uint64)pa) >> 12) << 10)
 
 #define PTE2PA(pte) (((pte) >> 10) << 12)
