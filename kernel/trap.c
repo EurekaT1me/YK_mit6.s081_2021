@@ -67,7 +67,6 @@ usertrap(void)
     syscall();
   } else if((which_dev = devintr()) != 0){
     // ok
-    // hardware interrupt
   } else {
     printf("usertrap(): unexpected scause %p pid=%d\n", r_scause(), p->pid);
     printf("            sepc=%p stval=%p\n", r_sepc(), r_stval());
@@ -78,55 +77,8 @@ usertrap(void)
     exit(-1);
 
   // give up the CPU if this is a timer interrupt.
-  if(which_dev == 2){
-      yield();
-        if(p->interval>0){
-            ++p->last_interval;
-            if(p->last_interval>p->interval&&p->intimer==0){
-                p->last_interval=0;
-                p->intimer=1;
-                // store register
-                p->timer_trapframe.kernel_satp=p->trapframe-> kernel_satp;   // kernel page table
-                p->timer_trapframe.kernel_sp=p->trapframe-> kernel_sp;     // top of process's kernel stack
-                p->timer_trapframe.kernel_trap=p->trapframe-> kernel_trap;   // usertrap()
-                p->timer_trapframe.epc= p->trapframe->epc;           // saved user program counter
-                p->timer_trapframe.kernel_hartid=p->trapframe-> kernel_hartid; // saved kernel tp
-                p->timer_trapframe.ra=p->trapframe->ra;
-                p->timer_trapframe.sp=p->trapframe-> sp;
-                p->timer_trapframe.gp=p->trapframe->gp;
-                p->timer_trapframe.tp=p->trapframe->tp;
-                p->timer_trapframe.t0=p->trapframe->t0;
-                p->timer_trapframe.t1=p->trapframe->t1;
-                p->timer_trapframe.t2=p->trapframe-> t2;
-                p->timer_trapframe.s0=p->trapframe->s0;
-                p->timer_trapframe.s1= p->trapframe->s1;
-                p->timer_trapframe.a0=p->trapframe->a0;
-                p->timer_trapframe.a1=p->trapframe->a1;
-                p->timer_trapframe.a2= p->trapframe->a2;
-                p->timer_trapframe.a3=p->trapframe->a3;
-                p->timer_trapframe.a4=p->trapframe-> a4;
-                p->timer_trapframe.a5= p->trapframe->a5;
-                p->timer_trapframe.a6=p->trapframe->a6;
-                p->timer_trapframe.a7= p->trapframe->a7;
-                p->timer_trapframe.s2= p->trapframe->s2;
-                p->timer_trapframe.s3= p->trapframe->s3;
-                p->timer_trapframe.s4= p->trapframe-> s4;
-                p->timer_trapframe.s5= p->trapframe-> s5;
-                p->timer_trapframe.s6=p->trapframe-> s6;
-                p->timer_trapframe.s7=p->trapframe-> s7;
-                p->timer_trapframe.s8=p->trapframe-> s8;
-                p->timer_trapframe.s9= p->trapframe-> s9;
-                p->timer_trapframe.s10=p->trapframe-> s10;
-                p->timer_trapframe.s11=p->trapframe-> s11;
-                p->timer_trapframe.t3= p->trapframe-> t3;
-                p->timer_trapframe.t4=p->trapframe-> t4;
-                p->timer_trapframe.t5= p->trapframe-> t5;
-                p->timer_trapframe.t6=p->trapframe-> t6;
-
-                p->trapframe->epc=p->handler;
-            }
-        }
-  }
+  if(which_dev == 2)
+    yield();
 
   usertrapret();
 }
