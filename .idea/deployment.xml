@@ -3,6 +3,13 @@
   <component name="PublishConfigData" autoUpload="Always" serverName="conn-docker" remoteFilesAllowedToDisappearOnAutoupload="false" confirmBeforeUploading="false">
     <option name="confirmBeforeUploading" value="false" />
     <serverData>
+      <paths name="6081_2020">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/xv6-labs-2020" local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
       <paths name="conn-docker">
         <serverdata>
           <mappings>
